@@ -1,0 +1,13 @@
+@charset "UTF-8";
+
+#wrap {width: 1000px; height:1000px; margin: auto;}
+
+header {height: 100px; background-color: rgb(204, 204, 204);}
+header .logo {width: 400px; height: 50px;}
+header .login-info {width: 900px; height: 100px}
+
+.contents {height: 600px;}
+.contents .content1 {width: 600px; height: 600px; margin: auto;}
+.contents .sign-up-form {width: 600px; height: 500px; border: 1px solid grey;}
+
+footer {height: 100px;}
