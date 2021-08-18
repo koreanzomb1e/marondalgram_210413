@@ -51,7 +51,7 @@
 			
 			$.post(url, params).done(function(data) {
 				if (data.result == 'success') {
-					location.href = '/post/post_list_view';
+					location.href = '/timeline/timeline_list_view';
 				} else {
 					alert("로그인에 실패했습니다.");
 				}

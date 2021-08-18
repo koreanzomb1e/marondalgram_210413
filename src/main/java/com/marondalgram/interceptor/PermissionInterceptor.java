@@ -27,15 +27,15 @@ public class PermissionInterceptor implements HandlerInterceptor {
 		String uri = request.getRequestURI();
 		logger.info("######## uri: " + uri);
 		
-		// 비로그인 && /post/...	=> 로그인 페이지로 리다이렉트
-		if (userLoginId == null && uri.startsWith("/post")) {
-			response.sendRedirect("/user/sign_in_view");
-			return false;
-		}
+		// 비로그인 && /timeline/...	=> 로그인 페이지로 리다이렉트
+		/*
+		 * if (userLoginId == null && uri.startsWith("/timeline")) {
+		 * response.sendRedirect("/user/sign_in_view"); return false; }
+		 */
 		
 		// 로그인 && /user/...	=> 포스트 페이지로 리다이렉트
 		if (userLoginId != null && uri.startsWith("/user")) {
-			response.sendRedirect("/post/post_list_view");
+			response.sendRedirect("/timeline/timeline_list_view");
 			return false;
 		}
 

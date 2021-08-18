@@ -1,37 +1,39 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
-<div class="content1">
-	<h1 class="p-2">회원 가입</h1>
-				
-	<form id="signUpForm" method="post" action="/user/sign_up">
-		<div class="sign-up-form">
-			<span class="m-3">ID</span>
-			<div class="d-flex m-3">
-				<input type="text" class="form-control col-7 mr-3" name="loginId" id="loginId" placeholder="ID를 입력해주세요">
-				<button type="button" class="btn btn-primary btn-sm" id="loginIdCheckBtn">중복확인</button>
+<div class="d-flex justify-content-center">
+	<div>
+		<h1 class="p-2">회원 가입</h1>
+					
+		<form id="signUpForm" method="post" action="/user/sign_up">
+			<div class="sign-up-form">
+				<span class="m-3">ID</span>
+				<div class="d-flex m-3">
+					<input type="text" class="form-control col-7 mr-3" name="loginId" id="loginId" placeholder="ID를 입력해주세요">
+					<button type="button" class="btn btn-primary btn-sm" id="loginIdCheckBtn">중복확인</button>
+				</div>
+								
+				<div id="idCheckLength" class="small text-danger d-none ml-3">아이디를 4자 이상 입력해주세요.</div>
+				<div id="idCheckDuplicated" class="small text-danger d-none ml-3">사용중인 아이디입니다.</div>
+				<div id="idCheckOk" class="small text-success d-none ml-3">사용 가능한 아이디입니다.</div>
+					
+				<span class="m-3">비밀번호</span>
+				<input type="password" class="form-control col-7 m-3" name="password" id="password" placeholder="비밀번호를 입력해주세요">
+								
+				<span class="m-3">비밀번호 확인</span>
+				<input type="password" class="form-control col-7 m-3" id="confirmPassword" placeholder="비밀번호를 입력해주세요">
+								
+				<span class="m-3">이름</span>
+				<input type="text" class="form-control col-7 m-3" name="name" id="name" placeholder="이름을 입력해주세요">
+								
+				<span class="m-3">이메일</span>
+				<input type="text" class="form-control col-7 m-3" name="email" id="email" placeholder="이메일을 입력해주세요">
+							
+				<div class="d-flex justify-content-center">
+					<button type="submit" class="btn btn-primary" id="signUpBtn">가입하기</button>
+				</div>
 			</div>
-							
-			<div id="idCheckLength" class="small text-danger d-none ml-3">아이디를 4자 이상 입력해주세요.</div>
-			<div id="idCheckDuplicated" class="small text-danger d-none ml-3">사용중인 아이디입니다.</div>
-			<div id="idCheckOk" class="small text-success d-none ml-3">사용 가능한 아이디입니다.</div>
-				
-			<span class="m-3">비밀번호</span>
-			<input type="password" class="form-control col-7 m-3" name="password" id="password" placeholder="비밀번호를 입력해주세요">
-							
-			<span class="m-3">비밀번호 확인</span>
-			<input type="password" class="form-control col-7 m-3" id="confirmPassword" placeholder="비밀번호를 입력해주세요">
-							
-			<span class="m-3">이름</span>
-			<input type="text" class="form-control col-7 m-3" name="name" id="name" placeholder="이름을 입력해주세요">
-							
-			<span class="m-3">이메일</span>
-			<input type="text" class="form-control col-7 m-3" name="email" id="email" placeholder="이메일을 입력해주세요">
-						
-			<div class="d-flex justify-content-center">
-				<button type="submit" class="btn btn-primary" id="signUpBtn">가입하기</button>
-			</div>
-		</div>
-	</form>
+		</form>
+	</div>
 </div>
 
 <script>
