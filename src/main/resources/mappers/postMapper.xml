@@ -14,6 +14,19 @@
  			`post`
  	</select>
  	
+ 	<select id="selectPostById" parameterType="int" resultType="com.marondalgram.post.model.Post">
+ 		SELECT
+ 			`id`
+ 			, `userId`
+ 			, `userName`
+ 			, `content`
+ 			, `imagePath`
+ 		FROM
+ 			`post`
+ 		WHERE
+ 			`id` = #{postId}
+ 	</select>
+ 	
  	<insert id="insertPost" parameterType="map">
  		INSERT INTO `post`
  		(
@@ -34,4 +47,12 @@
  			, NOW()
  		)
  	</insert>
+ 	
+ 	<delete id="deletePost" parameterType="int">
+ 		DELETE
+ 		FROM
+ 			`post`
+ 		WHERE
+ 			`id` = #{postId}
+ 	</delete>
  </mapper>

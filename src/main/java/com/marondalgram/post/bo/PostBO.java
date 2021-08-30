@@ -9,6 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
+import com.marondalgram.comment.bo.CommentBO;
 import com.marondalgram.common.FileManagerService;
 import com.marondalgram.post.dao.PostDAO;
 import com.marondalgram.post.model.Post;
@@ -17,6 +18,9 @@ import com.marondalgram.post.model.Post;
 public class PostBO {
 	
 	private Logger logger = LoggerFactory.getLogger(this.getClass());
+	
+	@Autowired
+	private CommentBO commentBO;
 	
 	@Autowired
 	private PostDAO postDAO;
@@ -28,7 +32,7 @@ public class PostBO {
 		return postDAO.selectPostList();
 	}
 	
-	public int create(int userId, String userName, String content, MultipartFile file) {
+	public int createPost(int userId, String userName, String content, MultipartFile file) {
 		// 파일을 image url 생성 후 db 입력
 		String imagePath = null;
 		if (file != null) {
@@ -42,5 +46,25 @@ public class PostBO {
 		
 		logger.info("####### imagePath: " + imagePath);
 		return postDAO.insertPost(userId, userName, content, imagePath);
+	}
+	
+	public int deletePost(int postId) {
+		Post post = postDAO.selectPostById(postId);
+		if (post == null) {
+			logger.error("[포스트 삭제] 포스트가 없음. postId: " + postId);
+		}
+		String imagePath = post.getImagePath();	// NPE - null pointer exception
+		
+		if (imagePath == null) {
+			try {
+				fileManagerService.deleteFile(imagePath);
+			} catch (IOException e) {
+				logger.error("[파일 삭제] 삭제 중 실패. postId: " + postId);
+			}
+		}
+		
+		commentBO.deleteComments(postId);
+		
+		return postDAO.deletePost(postId);
 	}
 }

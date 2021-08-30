@@ -7,21 +7,21 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 
-import com.marondalgram.post.bo.PostBO;
-import com.marondalgram.post.model.Post;
+import com.marondalgram.timeline.bo.ContentBO;
+import com.marondalgram.timeline.domain.Content;
 
 @RequestMapping("/timeline")
 @Controller
 public class TimelineController {
 	
 	@Autowired
-	private PostBO postBO;
+	private ContentBO contentBO;
 	
 	@RequestMapping("/timeline_list_view")
 	public String timeLineListView(Model model) {
 		
-		List<Post> postList = postBO.getPostList();
-		model.addAttribute("postList", postList);
+		List<Content> contentList = contentBO.getContentList();
+		model.addAttribute("contentList", contentList);
 		model.addAttribute("viewName", "timeline/timeline_list");
 		
 		return "template/layout";

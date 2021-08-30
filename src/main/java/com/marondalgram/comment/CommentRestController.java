@@ -1,4 +1,4 @@
-package com.marondalgram.post;
+package com.marondalgram.comment;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -9,34 +9,25 @@ import javax.servlet.http.HttpSession;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
-import org.springframework.web.multipart.MultipartFile;
 
-import com.marondalgram.post.bo.PostBO;
+import com.marondalgram.comment.bo.CommentBO;
 
-@RequestMapping("/post")
+@RequestMapping("/comment")
 @RestController
-public class PostRestController {
+public class CommentRestController {
 	
 	private Logger logger = LoggerFactory.getLogger(this.getClass());
 	
 	@Autowired
-	private PostBO postBO;
+	private CommentBO commentBO;
 
-	/**
-	 * 포스트 입력
-	 * @param content
-	 * @param file
-	 * @param request
-	 * @return
-	 */
-	@PostMapping("/create")
-	public Map<String, String> postCreate(
-			@RequestParam("content") String content,
-			@RequestParam(value="file", required=false) MultipartFile file,
+	@RequestMapping("/create")
+	public Map<String, String> commentCreate(
+			@RequestParam("comment") String content,
+			@RequestParam("postId") int postId,
 			HttpServletRequest request) {
 		
 		HttpSession session = request.getSession();
@@ -46,13 +37,11 @@ public class PostRestController {
 		Map<String, String> result = new HashMap<>();
 		if (userId == null || userName == null) {
 			result.put("result", "fail");
-			logger.error("[포스트 쓰기] 로그인 세션이 없습니다.");
+			logger.error("[댓글쓰기] 로그인 세션이 없습니다.");
 			return result;
 		}
 		
-		// insert DB
-		int row = postBO.createPost(userId, userName, content, file);
-		
+		int row = commentBO.addComment(postId, userId, userName, content);
 		if (row > 0) {
 			result.put("result", "success");
 		} else {
@@ -62,13 +51,23 @@ public class PostRestController {
 		return result;
 	}
 	
-	@PostMapping("/delete")
-	public Map<String, String> postDelete(
-			@RequestParam("postId") int postId) {
+	@RequestMapping("/delete")
+	public Map<String, String> commentDelete(
+			@RequestParam("commentId") int commentId,
+			HttpServletRequest request) {
 		
-		int row = postBO.deletePost(postId);
-				
+		HttpSession session = request.getSession();
+		String userName = (String)session.getAttribute("userName");
+		Integer userId = (Integer)session.getAttribute("userId");
+		
 		Map<String, String> result = new HashMap<>();
+		if (userId == null || userName == null) {
+			result.put("result", "fail");
+			logger.error("[댓글쓰기] 로그인 세션이 없습니다.");
+			return result;
+		}
+		
+		int row = commentBO.deleteComment(commentId);
 		if (row > 0) {
 			result.put("result", "success");
 		} else {
